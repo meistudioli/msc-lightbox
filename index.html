@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Web Component: &lt;msc-lightbox /> - lightbox effect component</title>
+<meta name="description" content="<msc-lightbox /> is a lightbox effect component. Developers could set trigger & content through it. Once user press trigger, content will display as lightbox effect." />
+<script type="module" src="mjs/wc-msc-lightbox.js"></script>
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/wc-base.css">
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/defaults.css">
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/buttons.css">
+<style>
+#hd,#ft{display:none;}
+body{position:relative;inline-size:100vw;block-size:100vh;margin:0;}
+
+.wrap{inline-size:100%;max-inline-size:min(800px, calc(100% - 2em));box-sizing:border-box;}
+
+.demo-wrap {
+  inline-size: 100%;
+  margin-inline: auto;
+  margin-block: 4em;
+
+  .buttons__wrap {
+    --accent-color: var(--dory);
+    --background-color: rgba(220 226 240);
+
+    position: relative;
+    outline: 0 none;
+    inline-size: 100%;
+    display: grid;
+    place-content: center;
+    border-radius: 1em;
+    background-color: var(--background-color);
+    overflow: hidden;
+    padding-block: 3em;
+
+    @media (prefers-color-scheme: dark) {
+      --background-color: rgba(29 34 40);
+      --accent-color: 75 168 248;
+    }
+
+    .lightbox-content {
+      object-fit: contain;
+      display: block;
+      border-radius: 1em;
+    }
+
+    .buttons[data-type='secondary1'] {
+      --default-text-color: rgba(var(--accent-color));
+    }
+
+    .buttons__wrap__set {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+
+      .buttons {
+        --icon: path('M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z');
+
+        gap: .5em;
+
+        &.buttons--image {
+          --icon: path('M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z');
+        }
+
+        &.buttons--video {
+          --icon: path('M10 8v8l5-4-5-4zm9-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z');
+        }
+
+        em {
+          font-size: 0;
+          inline-size: 24px;
+          aspect-ratio: 1/1;
+          display:block;
+          background-color: rgba(var(--accent-color));
+          overflow: hidden;
+          clip-path: var(--icon);
+        }
+      }
+    }
+  }
+}
+
+/* msc-lightbox */
+msc-lightbox {
+  --msc-lightbox-backdrop-background: rgba(0 0 0/.8);
+  --msc-lightbox-border-radius: 12px;
+  --msc-lightbox-background: rgba(255 255 255);
+  --msc-lightbox-margin: 12px;
+  --msc-lightbox-padding: 12px;
+  --msc-lightbox-box-shadow: 0 0 2px rgba(0 0 0/.05);
+
+  --msc-lightbox-button-size: 40;
+  --msc-lightbox-button-inset: 8px 8px auto auto;
+  --msc-lightbox-button-icon-color: rgba(255 255 255);
+  --msc-lightbox-button-background-normal: rgba(0 0 0/.5);
+  --msc-lightbox-button-background-active: rgba(0 0 0/.8);
+  --msc-lightbox-button-active-scale: .8;
+
+  /* customize */
+  --msc-lightbox-background: linear-gradient(0deg, #29519F, #6499D1); /* https://ai.google.dev/ */
+  --msc-lightbox-border-radius: 18px;
+  --msc-lightbox-margin: 10dvmin;
+  --msc-lightbox-padding: 2px;
+}
+
+msc-lightboxr:not(:defined){visibility:hidden;}
+</style>
+</head>
+
+<body class="flex-center">
+<div class="wrap">
+  <div class="demo-wrap">
+    <div class="buttons__wrap">
+      <div class="buttons__wrap__set">
+        <msc-lightbox>
+          <button
+            type="button"
+            class="buttons buttons--image"
+            data-type="secondary1"
+            data-size="large"
+            slot="trigger"
+          >
+            <em>icon</em>
+            SHOW IMAGE
+          </button>
+
+          <img
+            src="https://blog.lalacube.com/mei/img/Wallpaper6.jpg"
+            slot="content"
+            loading="lazy"
+            class="lightbox-content"
+          />
+        </msc-lightbox>
+
+        <msc-lightbox>
+          <button
+            type="button"
+            class="buttons buttons--video"
+            data-type="secondary1"
+            data-size="large"
+            slot="trigger"
+          >
+            <em>icon</em>
+            SHOW VIDEO
+          </button>
+
+          <video
+            class="lightbox-content"
+            src="https://blog.lalacube.com/mei/video/kaiju_no_8.mp4"
+            slot="content"
+            controls
+            muted
+            playsinline
+            controlslist="nodownload"
+          ></video>
+        </msc-lightbox>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+customElements.whenDefined('msc-lightbox').then(() => {
+  const wrap = document.querySelector('.buttons__wrap__set');
+  const lightboxClass = customElements.get('msc-lightbox');
+  const { supportedEvents } = lightboxClass;
+
+  const handler = (evt) => {
+    const { type, target } = evt;
+    const lightbox = target.closest('msc-lightbox');
+    
+    switch (type) {
+      case 'msc-lightbox-toggle': {
+        const { newState, oldState } = evt.detail || {};
+        const type = lightbox.dataset.type
+        const video = lightbox.querySelector('video');
+
+        // video
+        if (video) {
+          if (newState === 'open') {
+            video.play();
+          } else {
+            video.pause();
+          }
+        }
+
+        console.log(
+          `%cmsc-lightbox%c > %cmsc-lightbox-toggle%c > ${newState}.`,
+          'font-size:12px;line-height:1.3;background:#3a99d8;color:#fff;border-radius:3px;padding:0 4px;',
+          'font-size:12px;line-height:1.3;',
+          'font-size:12px;line-height:1.3;color:#a4f6b7;',
+          'font-size:12px;line-height:1.3;'
+        );
+        break
+      }
+
+      case 'msc-lightbox-beforetoggle': {
+        console.log(
+          `%cmsc-lightbox%c > %cmsc-lightbox-beforetoggle%c occured.`,
+          'font-size:12px;line-height:1.3;background:#3a99d8;color:#fff;border-radius:3px;padding:0 4px;',
+          'font-size:12px;line-height:1.3;',
+          'font-size:12px;line-height:1.3;color:#a4f6b7;',
+          'font-size:12px;line-height:1.3;'
+        );
+        break
+      }
+    }
+  };
+
+  // events
+  supportedEvents.forEach(
+    (event) => {
+      wrap.addEventListener(event, handler);
+    }
+  );
+});
+</script>
+</body>
+
+</html>

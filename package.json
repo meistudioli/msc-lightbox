@@ -1,0 +1,25 @@
+{
+  "name": "msc-lightbox",
+  "version": "1.0.0",
+  "description": "<msc-lightbox /> is a lightbox effect component. Developers could set trigger & content through it. Once user press trigger, content will display as lightbox effect.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meistudioli/msc-lightbox.git"
+  },
+  "keywords": [
+    "web",
+    "front-end",
+    "web component",
+    "lightbox"
+  ],
+  "author": "Paul Li",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meistudioli/msc-lightbox/issues"
+  },
+  "homepage": "https://github.com/meistudioli/msc-lightbox#readme"
+}
